@@ -1,0 +1,11 @@
+{% extends "crm/base.html" %}
+{% block title %}Log in · SmallBiz CRM{% endblock %}
+{% block content %}
+<div class="card" style="max-width:380px;margin:40px auto"><h1>Log in</h1>
+<form method="post">{% csrf_token %}
+{% if form.non_field_errors %}<p class="err">Wrong username or password.</p>{% endif %}
+<label for="id_username">Username</label>{{ form.username }}
+<label for="id_password">Password</label>{{ form.password }}
+<p><button>Log in</button></p></form>
+<p class="help">Demo data: run <code>python manage.py seed_demo</code>.</p></div>
+{% endblock %}
