@@ -2,6 +2,8 @@
 
 A small, self-hostable CRM for a single business or freelancer: contacts, companies, a deal pipeline, activity notes and a dashboard. Built with Django 5 and SQLite. It is a portfolio project that shows how I structure a business web app, not a replacement for a full CRM.
 
+![Dashboard](screenshots/dashboard.png)
+
 ## What it does
 
 - **Contacts and companies** with search (name, email, company) and CSV export.
@@ -9,6 +11,8 @@ A small, self-hostable CRM for a single business or freelancer: contacts, compan
 - **Activity log** per contact (note, call, email, meeting), optionally linked to a deal.
 - **Dashboard**: open pipeline value, value won this month, win rate (won divided by won plus lost), and value per stage.
 - **Accounts**: every record belongs to the user who created it. Users only ever see their own data.
+
+![Deal board](screenshots/deal-board.png)
 
 ## Design decisions worth reading
 
