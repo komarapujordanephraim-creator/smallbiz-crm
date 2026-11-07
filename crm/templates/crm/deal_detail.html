@@ -1,0 +1,8 @@
+{% extends "crm/base.html" %}
+{% block content %}
+<div class="row"><h1 style="margin:0">{{ object.title }}</h1><span class="tag {{ object.stage }}">{{ object.get_stage_display }}</span><span style="flex:1"></span>
+<a class="btn g" href="{% url 'deal_edit' object.pk %}">Edit</a><a class="btn g" href="{% url 'deal_delete' object.pk %}">Delete</a></div>
+<div class="card"><p style="margin:0">${{ object.value|floatformat:"0g" }} · <a href="{{ object.contact.get_absolute_url }}">{{ object.contact }}</a>{% if object.expected_close %} · expected close {{ object.expected_close|date:"j M Y" }}{% endif %}{% if object.closed_at %} · closed {{ object.closed_at|date:"j M Y" }}{% endif %}</p>
+<form method="post" action="{% url 'deal_stage' object.pk %}" class="row" style="margin-top:12px">{% csrf_token %}<select name="stage" style="max-width:200px">{% for v,l in stages %}<option value="{{ v }}" {% if v == object.stage %}selected{% endif %}>{{ l }}</option>{% endfor %}</select><button>Move stage</button></form></div>
+<div class="card"><h2>Activity</h2>{% for a in activities %}<p><span class="tag">{{ a.get_kind_display }}</span> {{ a.text|linebreaksbr }} <span class="help">{{ a.created|date:"j M Y" }}</span></p>{% empty %}<p class="help">No activity linked to this deal.</p>{% endfor %}</div>
+{% endblock %}

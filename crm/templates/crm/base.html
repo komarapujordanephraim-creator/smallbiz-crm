@@ -1,0 +1,36 @@
+{% load static %}<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}SmallBiz CRM{% endblock %}</title>
+<style>
+:root{--bg:#f5f6f8;--card:#fff;--tx:#1d2330;--mu:#667085;--line:#e4e7ec;--pri:#2f5bea;--ok:#12805c;--bad:#c0362c}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+a{color:var(--pri);text-decoration:none}a:hover{text-decoration:underline}
+header{background:#101828;color:#fff}header .in{max-width:1080px;margin:0 auto;padding:12px 20px;display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+header b{font-size:17px;margin-right:6px}header a{color:#d0d5dd}header a.on{color:#fff;font-weight:600}header .sp{flex:1}
+main{max-width:1080px;margin:0 auto;padding:24px 20px 60px}
+h1{font-size:24px;margin:0 0 16px}h2{font-size:17px;margin:0 0 10px}
+.card{overflow-x:auto;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:16px}
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.kpi b{display:block;font-size:26px}.kpi span{color:var(--mu);font-size:13px}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:9px 8px;overflow-wrap:anywhere;border-bottom:1px solid var(--line);vertical-align:top}th{color:var(--mu);font-size:12px;text-transform:uppercase;letter-spacing:.05em}
+.btn,button{display:inline-block;background:var(--pri);color:#fff;border:0;border-radius:8px;padding:8px 14px;font:inherit;cursor:pointer}.btn.g,button.g{background:#fff;color:var(--tx);border:1px solid var(--line)}.btn.d,button.d{background:var(--bad)}
+input,select,textarea{width:100%;padding:8px 10px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fff}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:14px}.row input[type=search]{max-width:320px}
+label{display:block;font-weight:600;margin:12px 0 4px}.err{color:var(--bad);font-size:13px}.help{color:var(--mu);font-size:13px}
+.board{display:grid;grid-template-columns:repeat(5,minmax(190px,1fr));gap:12px;overflow-x:auto}
+.col{background:#eceff3;border-radius:12px;padding:10px;min-height:120px}.col h3{font-size:13px;margin:2px 4px 8px;color:var(--mu);text-transform:uppercase;letter-spacing:.05em}
+.deal{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px;margin-bottom:8px}.deal small{color:var(--mu)}
+.tag{display:inline-block;font-size:12px;padding:1px 8px;border-radius:99px;background:#eef2ff;color:#3447b3}.tag.won{background:#e4f6ee;color:var(--ok)}.tag.lost{background:#fdeceb;color:var(--bad)}
+.msgs{color:var(--mu)}
+@media(max-width:700px){.board{grid-template-columns:repeat(5,230px)}}
+</style></head><body>
+<header><div class="in"><b>SmallBiz CRM</b>
+{% if user.is_authenticated %}
+<a href="{% url 'dashboard' %}" {% if request.resolver_match.url_name == 'dashboard' %}class="on"{% endif %}>Dashboard</a>
+<a href="{% url 'contact_list' %}" {% if 'contact' in request.resolver_match.url_name %}class="on"{% endif %}>Contacts</a>
+<a href="{% url 'company_list' %}" {% if 'company' in request.resolver_match.url_name %}class="on"{% endif %}>Companies</a>
+<a href="{% url 'deal_board' %}" {% if 'deal' in request.resolver_match.url_name %}class="on"{% endif %}>Deals</a>
+<span class="sp"></span><span>{{ user.get_username }}</span>
+<form method="post" action="{% url 'logout' %}" style="margin:0">{% csrf_token %}<button class="g" style="padding:4px 10px">Log out</button></form>
+{% endif %}</div></header>
+<main>{% block content %}{% endblock %}</main></body></html>

@@ -1,0 +1,16 @@
+{% extends "crm/base.html" %}
+{% block content %}
+<h1>Dashboard</h1>
+<div class="grid">
+<div class="card kpi"><b>${{ open_value|floatformat:"0g" }}</b><span>Open pipeline value</span></div>
+<div class="card kpi"><b>${{ won_this_month|floatformat:"0g" }}</b><span>Won this month</span></div>
+<div class="card kpi"><b>{% if win_rate is None %}-{% else %}{{ win_rate }}%{% endif %}</b><span>Win rate (won / closed)</span></div>
+<div class="card kpi"><b>{{ contacts }}</b><span>Contacts at {{ companies }} companies</span></div>
+</div>
+<div class="card"><h2>Pipeline by stage</h2>
+<table><tr><th>Stage</th><th>Deals</th><th>Value</th></tr>
+{% for s in stages %}<tr><td><span class="tag {{ s.key }}">{{ s.label }}</span></td><td>{{ s.count }}</td><td>${{ s.total|floatformat:"0g" }}</td></tr>{% endfor %}</table></div>
+<div class="card"><h2>Recent activity</h2>
+{% for a in recent %}<p style="margin:6px 0"><span class="tag">{{ a.get_kind_display }}</span> <a href="{{ a.contact.get_absolute_url }}">{{ a.contact }}</a>: {{ a.text|truncatechars:90 }} <span class="help">{{ a.created|timesince }} ago</span></p>
+{% empty %}<p class="help">Nothing logged yet.</p>{% endfor %}</div>
+{% endblock %}

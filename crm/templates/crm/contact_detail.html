@@ -1,0 +1,12 @@
+{% extends "crm/base.html" %}
+{% block content %}
+<div class="row"><h1 style="margin:0">{{ object.name }}</h1><span style="flex:1"></span>
+<a class="btn g" href="{% url 'contact_edit' object.pk %}">Edit</a><a class="btn g" href="{% url 'contact_delete' object.pk %}">Delete</a></div>
+<div class="card"><p style="margin:0">{{ object.job_title }}{% if object.company %} at {{ object.company }}{% endif %}<br>{{ object.email }} {{ object.phone }}</p></div>
+<div class="card"><div class="row"><h2 style="margin:0">Deals</h2><span style="flex:1"></span><a class="btn" href="{% url 'deal_create' %}?contact={{ object.pk }}">New deal</a></div>
+<table>{% for d in deals %}<tr><td><a href="{{ d.get_absolute_url }}">{{ d.title }}</a></td><td>${{ d.value|floatformat:"0g" }}</td><td><span class="tag {{ d.stage }}">{{ d.get_stage_display }}</span></td></tr>{% empty %}<tr><td class="help">No deals yet.</td></tr>{% endfor %}</table></div>
+<div class="card"><h2>Log activity</h2>
+<form method="post" action="{% url 'add_activity' object.pk %}">{% csrf_token %}
+<div class="grid"><div>{{ form.kind }}</div><div>{{ form.deal }}</div></div><div style="margin-top:8px">{{ form.text }}</div><p><button>Add</button></p></form>
+{% for a in activities %}<p style="margin:8px 0"><span class="tag">{{ a.get_kind_display }}</span> {{ a.text|linebreaksbr }} <span class="help">{{ a.created|date:"j M Y H:i" }}{% if a.deal %} · {{ a.deal }}{% endif %}</span></p>{% endfor %}</div>
+{% endblock %}

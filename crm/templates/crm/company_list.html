@@ -1,0 +1,6 @@
+{% extends "crm/base.html" %}
+{% block content %}
+<div class="row"><h1 style="margin:0">Companies</h1><span style="flex:1"></span><a class="btn" href="{% url 'company_create' %}">New company</a></div>
+<div class="card" style="padding:6px 14px"><table><tr><th>Name</th><th>Industry</th><th>Website</th><th>Contacts</th></tr>
+{% for c in object_list %}<tr><td>{{ c.name }}</td><td>{{ c.industry }}</td><td>{{ c.website }}</td><td>{{ c.contacts.count }}</td></tr>{% empty %}<tr><td colspan="4" class="help">No companies yet.</td></tr>{% endfor %}</table></div>
+{% endblock %}

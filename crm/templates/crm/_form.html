@@ -1,0 +1,11 @@
+{% extends "crm/base.html" %}
+{% block content %}
+<h1>{% block heading %}{% endblock %}</h1>
+<div class="card" style="max-width:560px"><form method="post" novalidate>{% csrf_token %}
+{% for field in form %}
+<label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}
+{% for e in field.errors %}<div class="err">{{ e }}</div>{% endfor %}
+{% endfor %}
+{{ form.non_field_errors }}
+<p style="margin-top:18px"><button>Save</button> <a class="btn g" href="javascript:history.back()">Cancel</a></p></form></div>
+{% endblock %}

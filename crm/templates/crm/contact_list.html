@@ -1,0 +1,10 @@
+{% extends "crm/base.html" %}
+{% block content %}
+<h1>Contacts</h1>
+<form class="row" method="get"><input type="search" name="q" value="{{ q }}" placeholder="Search name, email, company"><button>Search</button>
+<span style="flex:1"></span><a class="btn g" href="{% url 'contact_export' %}">Export CSV</a><a class="btn" href="{% url 'contact_create' %}">New contact</a></form>
+<div class="card" style="padding:6px 14px"><table><tr><th>Name</th><th>Company</th><th>Email</th><th>Phone</th></tr>
+{% for c in object_list %}<tr><td><a href="{{ c.get_absolute_url }}">{{ c.name }}</a></td><td>{{ c.company|default:"" }}</td><td>{{ c.email }}</td><td>{{ c.phone }}</td></tr>
+{% empty %}<tr><td colspan="4" class="help">No contacts found.</td></tr>{% endfor %}</table></div>
+{% if is_paginated %}<p>{% if page_obj.has_previous %}<a href="?page={{ page_obj.previous_page_number }}&q={{ q|urlencode }}">Previous</a>{% endif %} Page {{ page_obj.number }} of {{ paginator.num_pages }} {% if page_obj.has_next %}<a href="?page={{ page_obj.next_page_number }}&q={{ q|urlencode }}">Next</a>{% endif %}</p>{% endif %}
+{% endblock %}
